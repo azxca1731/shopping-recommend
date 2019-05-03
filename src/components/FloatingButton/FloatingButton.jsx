@@ -36,7 +36,7 @@ const InputBar = styled.input`
 const MessageContainerMock = styled.div`
 	width: 100%;
 	height: ${props => (props.active ? "400px" : "0")};
-	background-color: #fff;
+	background-color: ${props => props.theme.LightColor};
 	margin-bottom: ${props => (props.active ? "10px" : "0")};
 	transition: 0.5s all ease-in-out;
 	transition-delay: ${props => (props.active ? "0.5s" : "0s")};
