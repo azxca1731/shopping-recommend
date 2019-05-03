@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,10 +17,16 @@ const FloatingButtonDiv = styled.div`
 	}
 `;
 
+const PlusIcon = styled(FontAwesomeIcon)`
+	transform: ${props => (props.active ? "rotate(45deg)" : "")};
+	transition: transform 0.5s;
+`;
+
 const FloatingButton = () => {
+	const [active, setActive] = useState(false);
 	return (
-		<FloatingButtonDiv>
-			<FontAwesomeIcon icon={faPlus} />
+		<FloatingButtonDiv onClick={() => setActive(!active)}>
+			<PlusIcon icon={faPlus} active={active} />
 		</FloatingButtonDiv>
 	);
 };
