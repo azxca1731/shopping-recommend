@@ -3,7 +3,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const MessageContainerDiv = styled.div`
-	width: 100%;
+	width: 95%;
+	padding: ${props => (props.active ? "2.5%" : "0")};
 	height: ${props => (props.active ? "400px" : "0")};
 	background-color: ${props => props.theme.LightColor};
 	margin-bottom: ${props => (props.active ? "10px" : "0")};
@@ -13,12 +14,25 @@ const MessageContainerDiv = styled.div`
 	border-radius: 10px;
 `;
 
-const MessageContainer = ({ active }) => {
-	return <MessageContainerDiv active={active} />;
+const MessageContainer = ({ active, visible }) => {
+	const mock = [
+		{ message: "안녕하세요 쇼핑입니다!", me: false },
+		{ message: "궁금하신게 있다면 언제든지 검색을 눌러주세요!", me: false },
+		{ message: "와 정말 놀라와요!", me: true }
+	];
+	const data = mock;
+	return (
+		<MessageContainerDiv active={active}>
+			{active && visible
+				? data.map(item => <div key="message">{item.message}</div>)
+				: null}
+		</MessageContainerDiv>
+	);
 };
 
 MessageContainer.propTypes = {
-	active: PropTypes.bool.isRequired
+	active: PropTypes.bool.isRequired,
+	visible: PropTypes.bool.isRequired
 };
 
 export default MessageContainer;

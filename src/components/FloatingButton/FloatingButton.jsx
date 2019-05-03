@@ -38,9 +38,11 @@ const InputBar = styled.input`
 const FloatingButton = () => {
 	const [active, setActive] = useState(false);
 	const [input, changeInput] = useState("");
+	const [messageVisible, setVisible] = useState(false);
+	let timeOut;
 	return (
 		<FloatingButtonDiv active={active}>
-			<MessageContainer active={active} />
+			<MessageContainer active={active} visible={messageVisible} />
 			<InputBar
 				active={active}
 				value={input}
@@ -50,7 +52,18 @@ const FloatingButton = () => {
 			<PlusIcon
 				icon={faPlus}
 				active={active}
-				onClick={() => setActive(!active)}
+				onClick={() => {
+					if (!active) {
+						clearTimeout(timeOut);
+						setActive(!active);
+						timeOut = setTimeout(() => {
+							setVisible(true);
+						}, 1050);
+					} else {
+						setActive(!active);
+						setVisible(false);
+					}
+				}}
 			/>
 		</FloatingButtonDiv>
 	);
