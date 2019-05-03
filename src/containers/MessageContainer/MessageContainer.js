@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const MessageContainerDiv = styled.div`
 	width: 100%;
@@ -14,6 +15,10 @@ const MessageContainerDiv = styled.div`
 
 const MessageContainer = ({ active }) => {
 	return <MessageContainerDiv active={active} />;
+};
+
+MessageContainer.propTypes = {
+	active: PropTypes.bool.isRequired
 };
 
 export default MessageContainer;
