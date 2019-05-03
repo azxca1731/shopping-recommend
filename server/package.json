@@ -1,0 +1,21 @@
+{
+	"name": "server",
+	"version": "0.1.0",
+	"description": "server for client",
+	"scripts": {
+		"start": "yarn build && node dist/index.js",
+		"build": "babel src -d dist",
+		"develop": "nodemon src/index.js --ext js,graphql --exec babel-node"
+	},
+	"author": "azxca1731@naver.com",
+	"license": "MIT",
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
+		"babel-preset-env": "^1.7.0",
+		"nodemon": "^1.19.0"
+	},
+	"dependencies": {
+		"graphql-yoga": "^1.17.4"
+	}
+}
