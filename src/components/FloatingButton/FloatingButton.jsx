@@ -33,11 +33,23 @@ const InputBar = styled.input`
 	transition-delay: ${props => (props.active ? "0s" : "0.5s")};
 `;
 
+const MessageContainerMock = styled.div`
+	width: 100%;
+	height: ${props => (props.active ? "400px" : "0")};
+	background-color: #fff;
+	margin-bottom: ${props => (props.active ? "10px" : "0")};
+	transition: 0.5s all ease-in-out;
+	transition-delay: ${props => (props.active ? "0.5s" : "0s")};
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 10px;
+`;
+
 const FloatingButton = () => {
 	const [active, setActive] = useState(false);
 	const [input, changeInput] = useState("");
 	return (
 		<FloatingButtonDiv active={active}>
+			<MessageContainerMock active={active} />
 			<InputBar
 				active={active}
 				value={input}
