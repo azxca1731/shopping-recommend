@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import styled, { keyframes } from "styled-components";
+import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import MessageContainer from "../../containers/MessageContainer";
+
+const ButtonHover = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
 
 const FloatingButtonDiv = styled.div`
 	position: absolute;
@@ -14,8 +26,7 @@ const FloatingButtonDiv = styled.div`
 	background-color: ${props => props.theme.primaryColor};
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	&:hover {
-		opacity: 0.8;
-		transition: opacity 0.3s;
+		animation: ${ButtonHover} 1s;
 	}
 `;
 
@@ -24,7 +35,15 @@ const PlusIcon = styled(FontAwesomeIcon)`
 	transition: transform 0.5s;
 `;
 
+const SearchIcon = styled(FontAwesomeIcon)`
+	position: absolute;
+	bottom: 18px;
+	left: 20px;
+	display: ${props => (props.active ? "block" : "none")};
+`;
+
 const InputBar = styled.input`
+	text-align: right;
 	height: 20px;
 	width: ${props => (props.active ? "300px" : "0px")};
 	padding: ${props => (props.active ? "1px" : "0")};
@@ -33,6 +52,7 @@ const InputBar = styled.input`
 	border-radius: 0.25rem;
 	transition: all 0.5s;
 	transition-delay: ${props => (props.active ? "0s" : "0.5s")};
+	padding-right: ${props => (props.active ? "10px" : "0")};
 `;
 
 const FloatingButton = () => {
@@ -65,6 +85,7 @@ const FloatingButton = () => {
 					}
 				}}
 			/>
+			<SearchIcon icon={faSearch} active={active} />
 		</FloatingButtonDiv>
 	);
 };
