@@ -1,8 +1,6 @@
 import { GraphQLServer } from "graphql-yoga";
 import { Query } from "./resolvers";
-import { config } from "dotenv";
-
-config();
+import elastic from "./elastic";
 
 const server = new GraphQLServer({
 	typeDefs: "./src/schema.graphql",
@@ -11,7 +9,8 @@ const server = new GraphQLServer({
 	},
 	context({ request }) {
 		return {
-			request
+			request,
+			elastic
 		};
 	}
 });

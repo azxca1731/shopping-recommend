@@ -17,6 +17,7 @@
 		"nodemon": "^1.19.0"
 	},
 	"dependencies": {
+		"@elastic/elasticsearch": "^6.7.0-rc.2",
 		"graphql-yoga": "^1.17.4"
 	}
 }
