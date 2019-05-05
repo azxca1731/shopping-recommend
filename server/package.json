@@ -13,9 +13,11 @@
 		"babel-cli": "^6.26.0",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
 		"babel-preset-env": "^1.7.0",
+		"dotenv": "^8.0.0",
 		"nodemon": "^1.19.0"
 	},
 	"dependencies": {
+		"@elastic/elasticsearch": "^6.7.0-rc.2",
 		"graphql-yoga": "^1.17.4"
 	}
 }

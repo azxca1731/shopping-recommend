@@ -1,5 +1,6 @@
 import { GraphQLServer } from "graphql-yoga";
 import { Query } from "./resolvers";
+import elastic from "./elastic";
 
 const server = new GraphQLServer({
 	typeDefs: "./src/schema.graphql",
@@ -8,11 +9,12 @@ const server = new GraphQLServer({
 	},
 	context({ request }) {
 		return {
-			request
+			request,
+			elastic
 		};
 	}
 });
 
-server.start(() => {
-	console.log("The server is up!");
+server.start(({ port }) => {
+	console.log(`The server is up! port is ${port}`);
 });
