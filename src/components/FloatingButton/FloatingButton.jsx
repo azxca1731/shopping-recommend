@@ -4,6 +4,7 @@ import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import MessageContainer from "../../containers/MessageContainer";
+import InputBar from "../InputBar";
 
 const ButtonHover = keyframes`
   0% {
@@ -42,33 +43,14 @@ const SearchIcon = styled(FontAwesomeIcon)`
 	display: ${props => (props.active ? "block" : "none")};
 `;
 
-const InputBar = styled.input`
-	text-align: right;
-	height: 20px;
-	width: ${props => (props.active ? "300px" : "0px")};
-	padding: ${props => (props.active ? "1px" : "0")};
-	border: ${props => (props.active ? "1px" : "0px")} solid #ced4da;
-	margin: ${props => (props.active ? "0 16px 0 0" : "0")};
-	border-radius: 0.25rem;
-	transition: all 0.5s;
-	transition-delay: ${props => (props.active ? "0s" : "0.5s")};
-	padding-right: ${props => (props.active ? "10px" : "0")};
-`;
-
 const FloatingButton = () => {
 	const [active, setActive] = useState(false);
-	const [input, changeInput] = useState("");
 	const [messageVisible, setVisible] = useState(false);
 	let timeOut;
 	return (
 		<FloatingButtonDiv active={active}>
 			<MessageContainer active={active} visible={messageVisible} />
-			<InputBar
-				active={active}
-				value={input}
-				onChange={e => changeInput(e.target.value)}
-				placeholder="여기에 검색을 하세요!"
-			/>
+			<InputBar active={active} />
 			<PlusIcon
 				icon={faPlus}
 				active={active}
