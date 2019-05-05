@@ -1,6 +1,8 @@
 import React from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { ApolloProvider } from "react-apollo";
 
+import Client from "./Apollo";
 import FloatingButton from "./components/FloatingButton";
 import Theme from "./Theme";
 
@@ -18,13 +20,15 @@ const Screen = styled.div`
 
 function App() {
 	return (
-		<ThemeProvider theme={Theme}>
-			<Screen>
-				<GlobalStyle />
-				Hello HackDay
-				<FloatingButton />
-			</Screen>
-		</ThemeProvider>
+		<ApolloProvider client={Client}>
+			<ThemeProvider theme={Theme}>
+				<Screen>
+					<GlobalStyle />
+					Hello HackDay
+					<FloatingButton />
+				</Screen>
+			</ThemeProvider>
+		</ApolloProvider>
 	);
 }
 
