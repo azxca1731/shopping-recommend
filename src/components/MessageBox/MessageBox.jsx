@@ -14,13 +14,16 @@ const MessageBoxDiv = styled.div`
 	padding: 5px;
 	border-radius: 5px;
 	width: fit-content;
+	min-width: 20px;
 	color: ${props => props.theme.LightColor};
 	${props =>
 		props.me
-			? `margin-left: auto;
-			 background-color: ${props.theme.primaryColor}`
-			: `margin-right: auto;
-			 background-color: ${props.theme.secondaryColor}`}
+			? `margin-left: auto; 
+				background-color: ${props.theme.primaryColor};
+				text-align: right;`
+			: `margin-right: auto; 
+				background-color: ${props.theme.secondaryColor};
+				text-align: left;`}
 `;
 
 const DownIcon = styled(FontAwesomeIcon)`
