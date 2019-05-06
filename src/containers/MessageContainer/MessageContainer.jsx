@@ -25,9 +25,9 @@ const MessageContainer = ({ active, visible }) => {
 			{({ data: { getSearchedArray } }) => (
 				<MessageContainerDiv active={active}>
 					{active && visible
-						? getSearchedArray.map(({ message, me }) => (
+						? getSearchedArray.map(({ message, me, id }) => (
 								<MessageBox
-									key={message}
+									key={id}
 									message={message}
 									me={me}
 								/>
