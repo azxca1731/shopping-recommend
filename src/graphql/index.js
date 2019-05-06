@@ -19,3 +19,12 @@ export const ADD_SEARCHED_ARRAY = gql`
 		}
 	}
 `;
+
+export const SEARCH = gql`
+	query search($query: String!, $from: Int, $size: Int) {
+		search(data: { query: $query, from: $from, size: $size }) {
+			id
+			name
+		}
+	}
+`;
