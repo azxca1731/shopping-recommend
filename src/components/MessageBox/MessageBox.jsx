@@ -14,17 +14,22 @@ const MessageBoxDiv = styled.div`
 	padding: 5px;
 	border-radius: 5px;
 	width: fit-content;
+	min-width: 20px;
 	color: ${props => props.theme.LightColor};
-	${({ me, theme }) =>
-		me
-			? `margin-left: auto; background-color: ${theme.primaryColor}`
-			: `margin-right: auto; background-color: ${theme.secondaryColor}`}
+	${props =>
+		props.me
+			? `margin-left: auto; 
+				background-color: ${props.theme.primaryColor};
+				text-align: right;`
+			: `margin-right: auto; 
+				background-color: ${props.theme.secondaryColor};
+				text-align: left;`}
 `;
 
 const DownIcon = styled(FontAwesomeIcon)`
 	position: absolute;
 	bottom: -14px;
-	${({ me }) => (me ? "right: 0;" : "left: 0;")}
+	${props => (props.me === "true" ? "right: 0;" : "left: 0;")}
 `;
 
 const MessageBox = ({ message, me }) => {
@@ -35,7 +40,7 @@ const MessageBox = ({ message, me }) => {
 				icon={faCaretDown}
 				size={"2x"}
 				color={me ? Theme.primaryColor : Theme.secondaryColor}
-				me={me}
+				me={me.toString()}
 			/>
 		</MessageBoxDiv>
 	);
