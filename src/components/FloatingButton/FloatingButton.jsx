@@ -32,7 +32,7 @@ const FloatingButtonDiv = styled.div`
 `;
 
 const PlusIcon = styled(FontAwesomeIcon)`
-	transform: ${props => (props.active ? "rotate(45deg)" : "")};
+	transform: ${props => (props.active === "true" ? "rotate(45deg)" : "")};
 	transition: transform 0.5s;
 `;
 
@@ -40,7 +40,7 @@ const SearchIcon = styled(FontAwesomeIcon)`
 	position: absolute;
 	bottom: 18px;
 	left: 20px;
-	display: ${props => (props.active ? "block" : "none")};
+	display: ${props => (props.active === "true" ? "block" : "none")};
 `;
 
 const FloatingButton = () => {
@@ -53,7 +53,7 @@ const FloatingButton = () => {
 			<InputBar active={active} />
 			<PlusIcon
 				icon={faPlus}
-				active={active}
+				active={active.toString()}
 				onClick={() => {
 					if (!active) {
 						clearTimeout(timeOut);
@@ -67,7 +67,7 @@ const FloatingButton = () => {
 					}
 				}}
 			/>
-			<SearchIcon icon={faSearch} active={active} />
+			<SearchIcon icon={faSearch} active={active.toString()} />
 		</FloatingButtonDiv>
 	);
 };
