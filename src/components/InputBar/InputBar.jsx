@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Mutation } from "react-apollo";
+
+import { ADD_SEARCHED_ARRAY } from "../../graphql";
 
 const InputBarInput = styled.input`
 	text-align: right;
@@ -16,13 +19,28 @@ const InputBarInput = styled.input`
 
 const InputBar = ({ active }) => {
 	const [input, changeInput] = useState("");
+	const EnterInput = (event, mutation) => {
+		if (event.key === "Enter") {
+			mutation({
+				variables: {
+					message: input
+				}
+			});
+			changeInput("");
+		}
+	};
 	return (
-		<InputBarInput
-			active={active}
-			value={input}
-			onChange={e => changeInput(e.target.value)}
-			placeholder="여기에 검색을 하세요!"
-		/>
+		<Mutation mutation={ADD_SEARCHED_ARRAY}>
+			{(addSearchedArray, { loading, error, data }) => (
+				<InputBarInput
+					active={active}
+					value={input}
+					onChange={e => changeInput(e.target.value)}
+					onKeyPress={e => EnterInput(e, addSearchedArray)}
+					placeholder="여기에 검색을 하세요!"
+				/>
+			)}
+		</Mutation>
 	);
 };
 

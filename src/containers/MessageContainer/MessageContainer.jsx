@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Query } from "react-apollo";
 
+import { READ_SEARCHED_ARRAY } from "../../graphql";
 import MessageBox from "../../components/MessageBox";
 
 const MessageContainerDiv = styled.div`
@@ -18,32 +20,22 @@ const MessageContainerDiv = styled.div`
 `;
 
 const MessageContainer = ({ active, visible }) => {
-	const mock = [
-		{ message: "안녕하세요 쇼핑입니다!", me: false },
-		{ message: "궁금하신게 있다면 언제든지 검색을 눌러주세요!", me: false },
-		{ message: "와 정말 놀라와요!", me: true },
-		{ message: "안녕하세요 쇼핑입니다!", me: false },
-		{ message: "궁금하신게 있다면 언제든지 검색을 눌러주세요!", me: false },
-		{ message: "와 정말 놀라와요!", me: true },
-		{ message: "안녕하세요 쇼핑입니다!", me: false },
-		{ message: "궁금하신게 있다면 언제든지 검색을 눌러주세요!", me: false },
-		{ message: "와 정말 놀라와요!", me: true },
-		{ message: "안녕하세요 쇼핑입니다!", me: false },
-		{ message: "궁금하신게 있다면 언제든지 검색을 눌러주세요!", me: false },
-		{ message: "와 정말 놀라와요!", me: true },
-		{ message: "안녕하세요 쇼핑입니다!", me: false },
-		{ message: "궁금하신게 있다면 언제든지 검색을 눌러주세요!", me: false },
-		{ message: "와 정말 놀라와요!", me: true }
-	];
-	const data = mock;
 	return (
-		<MessageContainerDiv active={active}>
-			{active && visible
-				? data.map(({ message, me }) => (
-						<MessageBox key={message} message={message} me={me} />
-				  ))
-				: null}
-		</MessageContainerDiv>
+		<Query query={READ_SEARCHED_ARRAY}>
+			{({ data: { getSearchedArray } }) => (
+				<MessageContainerDiv active={active}>
+					{active && visible
+						? getSearchedArray.map(({ message, me }) => (
+								<MessageBox
+									key={message}
+									message={message}
+									me={me}
+								/>
+						  ))
+						: null}
+				</MessageContainerDiv>
+			)}
+		</Query>
 	);
 };
 
