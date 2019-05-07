@@ -4,7 +4,7 @@ import { HttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
 import uuid from "uuid/v1";
 
-import { READ_SEARCHED_ARRAY } from "./graphql";
+import { READ_SEARCHED_ARRAY, SEARCH } from "./graphql";
 
 const cache = new InMemoryCache();
 
@@ -41,7 +41,7 @@ const Client = new ApolloClient({
 			]
 		},
 		Mutation: {
-			addSearchedArray: (_, { message }, { cache }) => {
+			addSearchedArray: async (_, { message }, { cache, client }) => {
 				const query = READ_SEARCHED_ARRAY;
 				const { getSearchedArray: previousArray } = cache.readQuery({
 					query
@@ -55,9 +55,38 @@ const Client = new ApolloClient({
 				const data = {
 					getSearchedArray: [...previousArray, newMessage]
 				};
-				/* TODO1: 서버에 데이터 요청 검색 쿼리 요청후 그 검색 데이터를 캐쉬에 쓰기 issue_6 */
 				/* TODO2: newMessage를 예전 대화를 가져올 때 사용하기 위해 서버에 전송 issue_5 */
 				cache.writeQuery({ query, data });
+				const {
+					data: { search }
+				} = await client.query({
+					query: SEARCH,
+					variables: {
+						query: message,
+						from: 0,
+						size: 5
+					}
+				});
+				const newServerMessage = {
+					message:
+						search.length > 0
+							? search.reduce(
+									(acc, { name }, index) =>
+										`${acc} ${index + 1}:${name}`,
+									""
+							  )
+							: "검색된 상품이 없습니다. 다시 확인해주세요",
+					me: false,
+					id: uuid(),
+					__typename: "Message"
+				};
+				const newData = {
+					getSearchedArray: [
+						...data.getSearchedArray,
+						newServerMessage
+					]
+				};
+				cache.writeQuery({ query, data: newData });
 				return newMessage;
 			}
 		}

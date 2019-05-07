@@ -15,6 +15,7 @@ const MessageBoxDiv = styled.div`
 	border-radius: 5px;
 	width: fit-content;
 	min-width: 20px;
+	max-width: 300px;
 	color: ${props => props.theme.LightColor};
 	${props =>
 		props.me
