@@ -37,6 +37,18 @@ const Query = {
 		} catch (err) {
 			throw new Error(err);
 		}
+	},
+	getSearchedArray(
+		parent,
+		args,
+		{
+			mongo: { Message }
+		},
+		info
+	) {
+		// TODO: 혹시나 유저 별로 다른 화면을 보여준다고 가정했을 시
+		// request를 보아 요청한 유저(JWT로 관리)만 보여줄 것
+		return Message.find();
 	}
 };
 
