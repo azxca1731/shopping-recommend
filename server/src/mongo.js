@@ -7,6 +7,7 @@ db.once("open", function() {
 	console.log("Connected to mongod server");
 });
 
+mongoose.set("useCreateIndex", true);
 mongoose.set("useNewUrlParser", true);
 mongoose.connect("mongodb://localhost/shopping");
 /* DB SETTING END */
@@ -21,6 +22,7 @@ const messageSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
 	name: String,
+	email: { type: String, index: true, unique: true },
 	message: [{ type: mongoose.Schema.Types.ObjectId, ref: "message" }]
 });
 
