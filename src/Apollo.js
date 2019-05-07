@@ -4,7 +4,7 @@ import { HttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
 import uuid from "uuid/v1";
 
-import { READ_SEARCHED_ARRAY, SEARCH } from "./graphql";
+import { READ_SEARCHED_ARRAY, SEARCH, GET_SEARCHED_ARRAY } from "./graphql";
 
 const cache = new InMemoryCache();
 
@@ -30,15 +30,14 @@ const Client = new ApolloClient({
 	typeDefs,
 	resolvers: {
 		Query: {
-			getSearchedArray: () => [
-				/* TODO: 여기에 예전 대화 목록 요청 issue_5
-				{
-					message: "제발 되라",
-					me: true,
-					id: uuid(),
-					__typename: "Message"
-				}*/
-			]
+			getSearchedArray: async (_, args, { client }) => {
+				const {
+					data: { getSearchedArray }
+				} = await client.query({
+					query: GET_SEARCHED_ARRAY
+				});
+				return getSearchedArray;
+			}
 		},
 		Mutation: {
 			addSearchedArray: async (_, { message }, { cache, client }) => {

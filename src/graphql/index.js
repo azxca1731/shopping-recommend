@@ -10,6 +10,16 @@ export const READ_SEARCHED_ARRAY = gql`
 	}
 `;
 
+export const GET_SEARCHED_ARRAY = gql`
+	query getSearchedArray {
+		getSearchedArray {
+			message
+			me
+			id
+		}
+	}
+`;
+
 export const ADD_SEARCHED_ARRAY = gql`
 	mutation addSearchedArray($message: String!) {
 		addSearchedArray(message: $message) @client {
