@@ -54,7 +54,6 @@ const Client = new ApolloClient({
 				const data = {
 					getSearchedArray: [...previousArray, newMessage]
 				};
-				/* TODO2: newMessage를 예전 대화를 가져올 때 사용하기 위해 서버에 전송 issue_5 */
 				cache.writeQuery({ query, data });
 				const {
 					data: { search }
