@@ -3,8 +3,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Query } from "react-apollo";
 
-import { READ_SEARCHED_ARRAY } from "../../graphql";
-import MessageBox from "../../components/MessageBox";
+import { READ_SEARCHED_ARRAY } from "queries";
+import MessageBox from "components/MessageBox";
 
 const MessageContainerDiv = styled.div`
 	width: 95%;

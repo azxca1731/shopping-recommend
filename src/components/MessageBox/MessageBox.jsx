@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Theme from "../../Theme";
+import Theme from "Theme";
 
 const MessageBoxDiv = styled.div`
 	position: relative;

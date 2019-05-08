@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Mutation } from "react-apollo";
 
-import { ADD_SEARCHED_ARRAY } from "../../graphql";
+import { ADD_SEARCHED_ARRAY } from "queries";
 
 const InputBarInput = styled.input`
 	text-align: right;
