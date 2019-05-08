@@ -2,9 +2,9 @@ import React from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { ApolloProvider } from "react-apollo";
 
-import Client from "./Apollo";
-import FloatingButton from "./components/FloatingButton";
-import Theme from "./Theme";
+import Client from "Apollo";
+import FloatingButton from "components/FloatingButton";
+import Theme from "Theme";
 
 const GlobalStyle = createGlobalStyle`
   body {

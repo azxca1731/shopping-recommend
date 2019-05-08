@@ -4,7 +4,7 @@ import { HttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
 import uuid from "uuid/v1";
 
-import { READ_SEARCHED_ARRAY, SEARCH, GET_SEARCHED_ARRAY } from "./graphql";
+import { READ_SEARCHED_ARRAY, SEARCH, GET_SEARCHED_ARRAY } from "queries";
 
 const cache = new InMemoryCache();
 

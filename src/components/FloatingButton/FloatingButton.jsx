@@ -3,8 +3,8 @@ import styled, { keyframes } from "styled-components";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import MessageContainer from "../../containers/MessageContainer";
-import InputBar from "../InputBar";
+import MessageContainer from "containers/MessageContainer";
+import InputBar from "components/InputBar";
 
 const ButtonHover = keyframes`
   0% {
