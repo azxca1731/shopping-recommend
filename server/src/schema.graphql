@@ -1,6 +1,7 @@
 type Query {
 	connection: Boolean
 	search(data: SearchInput!): [ShoppingItem!]!
+	getSearchedArray: [Message!]!
 }
 
 input SearchInput {
@@ -9,7 +10,16 @@ input SearchInput {
 	size: Int
 }
 
+scalar Date
+
 type ShoppingItem {
 	id: ID!
 	name: String!
+}
+
+type Message {
+	id: ID!
+	me: Boolean!
+	message: String!
+	created_date: Date!
 }
