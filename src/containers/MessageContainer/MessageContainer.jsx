@@ -19,25 +19,66 @@ const MessageContainerDiv = styled.div`
 	overflow-y: scroll;
 `;
 
-const MessageContainer = ({ active, visible }) => {
-	return (
-		<Query query={READ_SEARCHED_ARRAY}>
-			{({ data: { getSearchedArray } }) => (
-				<MessageContainerDiv active={active}>
-					{active && visible
-						? getSearchedArray.map(({ message, me, id }) => (
-								<MessageBox
-									key={id}
-									message={message}
-									me={me}
-								/>
-						  ))
-						: null}
-				</MessageContainerDiv>
-			)}
-		</Query>
-	);
-};
+class MessageContainer extends React.Component {
+	scrollToBottom = () => {
+		if (this.messageContainer) {
+			this.messageContainer.scrollTo(
+				0,
+				this.messageContainer.scrollHeight
+			);
+		}
+	};
+
+	componentDidMount() {
+		this.scrollToBottom();
+	}
+
+	componentDidUpdate() {
+		this.scrollToBottom();
+	}
+
+	shouldComponentUpdate(nextProps) {
+		if (
+			nextProps.active !== this.props.active ||
+			nextProps.visible !== this.props.visible
+		) {
+			return true;
+		}
+		return false;
+	}
+
+	render() {
+		const { active, visible } = this.props;
+		return (
+			<Query query={READ_SEARCHED_ARRAY}>
+				{({ data: { getSearchedArray } }) => {
+					//렌더링을 시켜주고 scrollToBottom을 호출
+					setTimeout(this.scrollToBottom, 0);
+					return (
+						<MessageContainerDiv
+							active={active}
+							ref={el => {
+								this.messageContainer = el;
+							}}
+						>
+							{active && visible
+								? getSearchedArray.map(
+										({ message, me, id }) => (
+											<MessageBox
+												key={id}
+												message={message}
+												me={me}
+											/>
+										)
+								  )
+								: null}
+						</MessageContainerDiv>
+					);
+				}}
+			</Query>
+		);
+	}
+}
 
 MessageContainer.propTypes = {
 	active: PropTypes.bool.isRequired,
