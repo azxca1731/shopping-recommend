@@ -29,6 +29,24 @@ class MessageContainer extends React.Component {
 		}
 	};
 
+	componentDidMount() {
+		this.scrollToBottom();
+	}
+
+	componentDidUpdate() {
+		this.scrollToBottom();
+	}
+
+	shouldComponentUpdate(nextProps) {
+		if (
+			nextProps.active !== this.props.active ||
+			nextProps.visible !== this.props.visible
+		) {
+			return true;
+		}
+		return false;
+	}
+
 	render() {
 		const { active, visible } = this.props;
 		return (
