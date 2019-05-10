@@ -24,8 +24,17 @@ const Query = {
 					from,
 					size,
 					query: {
-						term: {
-							name: query
+						function_score: {
+							query: {
+								match: { name: query }
+							},
+							script_score: {
+								script: {
+									lang: "expression",
+									source:
+										"(doc['popularity'].value +1) * _score"
+								}
+							}
 						}
 					}
 				}
