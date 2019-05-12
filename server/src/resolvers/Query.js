@@ -66,13 +66,19 @@ const Query = {
 		parent,
 		args,
 		{
-			mongo: { Message }
+			mongo: { Message },
+			request: { session }
 		},
 		info
 	) {
-		// TODO: 혹시나 유저 별로 다른 화면을 보여준다고 가정했을 시
-		// request를 보아 요청한 유저(JWT로 관리)만 보여줄 것
-		// 혹시 순서가 바뀔 수도 있기에
+		console.log(session.user);
+		if (!session.user) {
+			session.user = {
+				name: "Junghun",
+				age: 25,
+				createCurTime: new Date()
+			};
+		}
 		const returnValue = await Message.find().sort("created_date");
 
 		return returnValue;

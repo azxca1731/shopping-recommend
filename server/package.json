@@ -20,6 +20,7 @@
 	},
 	"dependencies": {
 		"@elastic/elasticsearch": "^6.7.0-rc.2",
+		"express-session": "^1.16.1",
 		"graphql-yoga": "^1.17.4",
 		"mongoose": "^5.5.6"
 	}

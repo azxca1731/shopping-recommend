@@ -26,11 +26,14 @@ const typeDefs = gql`
 
 const Client = new ApolloClient({
 	cache,
-	link: new HttpLink({ uri: "http://localhost:4000/" }),
+	link: new HttpLink({
+		uri: "http://localhost:4000/",
+		credentials: "include"
+	}),
 	typeDefs,
 	resolvers: {
 		Query: {
-			getSearchedArray: async (_, args, { client }) => {
+			getSearchedArray: async (_, args, { client, request }) => {
 				const {
 					data: { getSearchedArray }
 				} = await client.query({
