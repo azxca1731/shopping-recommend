@@ -6,6 +6,7 @@ export const READ_SEARCHED_ARRAY = gql`
 			message
 			me
 			id
+			query
 		}
 	}
 `;
@@ -16,6 +17,7 @@ export const GET_SEARCHED_ARRAY = gql`
 			message
 			me
 			id
+			query
 		}
 	}
 `;

@@ -20,6 +20,7 @@ type ShoppingItem {
 type Message {
 	id: ID!
 	me: Boolean!
-	message: String!
+	query: String
+	message: String
 	created_date: Date!
 }
