@@ -21,8 +21,7 @@ const messageSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-	name: String,
-	email: { type: String, index: true, unique: true },
+	uid: String,
 	message: [{ type: mongoose.Schema.Types.ObjectId, ref: "message" }]
 });
 

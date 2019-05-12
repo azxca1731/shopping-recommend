@@ -1,3 +1,4 @@
+import uuid from "uuid/v1";
 const Query = {
 	async connection(parent, args, context, info) {
 		return true;
@@ -9,7 +10,10 @@ const Query = {
 		},
 		{
 			elastic,
-			mongo: { Message }
+			mongo: { Message },
+			request: {
+				session: { user }
+			}
 		},
 		info
 	) {
@@ -39,7 +43,11 @@ const Query = {
 					}
 				}
 			});
-			const newMessage = new Message({ message: query, me: true });
+			const newMessage = new Message({
+				message: query,
+				me: true,
+				owner: user
+			});
 			newMessage.save();
 			//TODO: 서버측의 응답을 더 좋은 방법으로 가지고 있을 수 있나 확인
 			const returnDate = hits.reduce(
@@ -54,7 +62,8 @@ const Query = {
 					(acc, { name }, index) => `${acc} ${index + 1}:${name}`,
 					""
 				),
-				me: false
+				me: false,
+				owner: user
 			});
 			serverMessage.save();
 			return returnDate;
@@ -66,20 +75,19 @@ const Query = {
 		parent,
 		args,
 		{
-			mongo: { Message },
+			mongo: { Message, User },
 			request: { session }
 		},
 		info
 	) {
-		console.log(session.user);
 		if (!session.user) {
-			session.user = {
-				name: "Junghun",
-				age: 25,
-				createCurTime: new Date()
-			};
+			const newUser = new User({ uid: uuid() });
+			await newUser.save();
+			session.user = newUser;
 		}
-		const returnValue = await Message.find().sort("created_date");
+		const returnValue = await Message.find({ owner: session.user }).sort(
+			"created_date"
+		);
 
 		return returnValue;
 	}
