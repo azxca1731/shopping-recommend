@@ -12,7 +12,7 @@ const MessageBoxDiv = styled.div`
 	position: relative;
 	background-color: ${props => props.theme.secondaryColor};
 	margin-bottom: 10px;
-	padding: 5px;
+	padding: 10px;
 	border-radius: 5px;
 	width: fit-content;
 	min-width: 20px;
