@@ -1,3 +1,4 @@
+import uuid from "uuid/v1";
 const Query = {
 	async connection(parent, args, context, info) {
 		return true;
@@ -9,7 +10,10 @@ const Query = {
 		},
 		{
 			elastic,
-			mongo: { Message }
+			mongo: { Message },
+			request: {
+				session: { user }
+			}
 		},
 		info
 	) {
@@ -39,7 +43,11 @@ const Query = {
 					}
 				}
 			});
-			const newMessage = new Message({ message: query, me: true });
+			const newMessage = new Message({
+				message: query,
+				me: true,
+				owner: user
+			});
 			newMessage.save();
 			//TODO: 서버측의 응답을 더 좋은 방법으로 가지고 있을 수 있나 확인
 			const returnDate = hits.reduce(
@@ -54,7 +62,8 @@ const Query = {
 					(acc, { name }, index) => `${acc} ${index + 1}:${name}`,
 					""
 				),
-				me: false
+				me: false,
+				owner: user
 			});
 			serverMessage.save();
 			return returnDate;
@@ -66,14 +75,19 @@ const Query = {
 		parent,
 		args,
 		{
-			mongo: { Message }
+			mongo: { Message, User },
+			request: { session }
 		},
 		info
 	) {
-		// TODO: 혹시나 유저 별로 다른 화면을 보여준다고 가정했을 시
-		// request를 보아 요청한 유저(JWT로 관리)만 보여줄 것
-		// 혹시 순서가 바뀔 수도 있기에
-		const returnValue = await Message.find().sort("created_date");
+		if (!session.user) {
+			const newUser = new User({ uid: uuid() });
+			await newUser.save();
+			session.user = newUser;
+		}
+		const returnValue = await Message.find({ owner: session.user }).sort(
+			"created_date"
+		);
 
 		return returnValue;
 	}
