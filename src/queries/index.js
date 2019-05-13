@@ -43,3 +43,9 @@ export const SEARCH = gql`
 		}
 	}
 `;
+
+export const SAVE_CHAT = gql`
+	mutation saveChat($query: String!) {
+		saveChat(query: $query)
+	}
+`;
