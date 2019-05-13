@@ -6,6 +6,7 @@ export const READ_SEARCHED_ARRAY = gql`
 			message
 			me
 			id
+			query
 		}
 	}
 `;
@@ -16,6 +17,7 @@ export const GET_SEARCHED_ARRAY = gql`
 			message
 			me
 			id
+			query
 		}
 	}
 `;
@@ -33,8 +35,17 @@ export const ADD_SEARCHED_ARRAY = gql`
 export const SEARCH = gql`
 	query search($query: String!, $from: Int, $size: Int) {
 		search(data: { query: $query, from: $from, size: $size }) {
-			id
-			name
+			total
+			productList {
+				id
+				name
+			}
 		}
+	}
+`;
+
+export const SAVE_CHAT = gql`
+	mutation saveChat($query: String!) {
+		saveChat(query: $query)
 	}
 `;

@@ -15,6 +15,7 @@ mongoose.connect("mongodb://localhost/shopping");
 /* DB SCHEMA START */
 const messageSchema = new mongoose.Schema({
 	message: String,
+	query: String,
 	me: Boolean,
 	created_date: { type: Date, default: Date.now() + 9 * 3600000 },
 	owner: { type: mongoose.Schema.Types.ObjectId, ref: "user" }

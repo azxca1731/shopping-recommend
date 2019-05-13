@@ -63,11 +63,12 @@ class MessageContainer extends React.Component {
 						>
 							{active && visible
 								? getSearchedArray.map(
-										({ message, me, id }) => (
+										({ message, me, id, query }) => (
 											<MessageBox
 												key={id}
 												message={message}
 												me={me}
+												query={query}
 											/>
 										)
 								  )

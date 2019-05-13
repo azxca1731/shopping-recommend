@@ -1,7 +1,11 @@
 type Query {
 	connection: Boolean
-	search(data: SearchInput!): [ShoppingItem!]!
+	search(data: SearchInput!): SearchReturnValue!
 	getSearchedArray: [Message!]!
+}
+
+type Mutation {
+	saveChat(query: String!): Boolean
 }
 
 input SearchInput {
@@ -12,6 +16,11 @@ input SearchInput {
 
 scalar Date
 
+type SearchReturnValue {
+	total: Int!
+	productList: [ShoppingItem!]!
+}
+
 type ShoppingItem {
 	id: ID!
 	name: String!
@@ -20,6 +29,7 @@ type ShoppingItem {
 type Message {
 	id: ID!
 	me: Boolean!
-	message: String!
+	query: String
+	message: String
 	created_date: Date!
 }

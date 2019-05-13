@@ -4,7 +4,7 @@ import { HttpLink } from "apollo-link-http";
 import gql from "graphql-tag";
 import uuid from "uuid/v1";
 
-import { READ_SEARCHED_ARRAY, SEARCH, GET_SEARCHED_ARRAY } from "queries";
+import { READ_SEARCHED_ARRAY, GET_SEARCHED_ARRAY } from "queries";
 
 const cache = new InMemoryCache();
 
@@ -19,7 +19,8 @@ const typeDefs = gql`
 
 	extend type Message {
 		me: Boolean!
-		message: String!
+		message: String
+		query: String
 		id: ID!
 	}
 `;
@@ -50,6 +51,7 @@ const Client = new ApolloClient({
 				});
 				const newMessage = {
 					message,
+					query: "",
 					me: true,
 					id: uuid(),
 					__typename: "Message"
@@ -58,25 +60,9 @@ const Client = new ApolloClient({
 					getSearchedArray: [...previousArray, newMessage]
 				};
 				cache.writeQuery({ query, data });
-				const {
-					data: { search }
-				} = await client.query({
-					query: SEARCH,
-					variables: {
-						query: message,
-						from: 0,
-						size: 5
-					}
-				});
 				const newServerMessage = {
-					message:
-						search.length > 0
-							? search.reduce(
-									(acc, { name }, index) =>
-										`${acc} ${index + 1}:${name}`,
-									""
-							  )
-							: "검색된 상품이 없습니다. 다시 확인해주세요",
+					message: "",
+					query: message,
 					me: false,
 					id: uuid(),
 					__typename: "Message"

@@ -8,20 +8,12 @@ const Query = {
 		{
 			data: { query, from = 0, size = 10 }
 		},
-		{
-			elastic,
-			mongo: { Message },
-			request: {
-				session: { user }
-			}
-		},
+		{ elastic },
 		info
 	) {
 		try {
 			const {
-				body: {
-					hits: { hits }
-				}
+				body: { hits }
 			} = await elastic.search({
 				index: "shopping",
 				body: {
@@ -43,30 +35,14 @@ const Query = {
 					}
 				}
 			});
-			const newMessage = new Message({
-				message: query,
-				me: true,
-				owner: user
-			});
-			newMessage.save();
-			//TODO: 서버측의 응답을 더 좋은 방법으로 가지고 있을 수 있나 확인
-			const returnDate = hits.reduce(
+			const returnDate = hits.hits.reduce(
 				(acc, { _id, _source: { name } }) => [
 					{ id: _id, name },
 					...acc
 				],
 				[]
 			);
-			const serverMessage = new Message({
-				message: returnDate.reduce(
-					(acc, { name }, index) => `${acc} ${index + 1}:${name}`,
-					""
-				),
-				me: false,
-				owner: user
-			});
-			serverMessage.save();
-			return returnDate;
+			return { total: hits.total, productList: returnDate };
 		} catch (err) {
 			throw new Error(err);
 		}

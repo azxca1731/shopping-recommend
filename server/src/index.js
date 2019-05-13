@@ -1,13 +1,14 @@
 import { GraphQLServer } from "graphql-yoga";
 import session from "express-session";
-import { Query } from "./resolvers";
+import { Query, Mutation } from "./resolvers";
 import elastic from "./elastic";
 import mongo from "./mongo";
 
 const server = new GraphQLServer({
 	typeDefs: "./src/schema.graphql",
 	resolvers: {
-		Query
+		Query,
+		Mutation
 	},
 	context({ request }) {
 		return {

@@ -6,12 +6,13 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Theme from "Theme";
+import ProductList from "containers/ProductList";
 
 const MessageBoxDiv = styled.div`
 	position: relative;
 	background-color: ${props => props.theme.secondaryColor};
 	margin-bottom: 10px;
-	padding: 5px;
+	padding: 10px;
 	border-radius: 5px;
 	width: fit-content;
 	min-width: 20px;
@@ -33,10 +34,11 @@ const DownIcon = styled(FontAwesomeIcon)`
 	${props => (props.me === "true" ? "right: 0;" : "left: 0;")}
 `;
 
-const MessageBox = ({ message, me }) => {
+const MessageBox = ({ message, me, query }) => {
 	return (
 		<MessageBoxDiv me={me}>
 			{message}
+			{query ? <ProductList query={query} /> : null}
 			<DownIcon
 				icon={faCaretDown}
 				size={"2x"}
@@ -49,7 +51,13 @@ const MessageBox = ({ message, me }) => {
 
 MessageBox.propTypes = {
 	message: PropTypes.string.isRequired,
-	me: PropTypes.bool.isRequired
+	me: PropTypes.bool.isRequired,
+	item: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string
+		})
+	)
 };
 
 export default MessageBox;
