@@ -13,6 +13,7 @@ const ProductRow = styled.div`
 
 const ProductList = ({ query }) => {
 	const [currentFrom, setFrom] = useState(0);
+	let total;
 	return (
 		<ProductListDiv>
 			<Query
@@ -22,8 +23,9 @@ const ProductList = ({ query }) => {
 				{({ loading, error, data: { search } }) => {
 					if (loading) return "loading";
 					if (error) return `Error! ${error}`;
+					total = search.total;
 					return search
-						? search.map(({ name, id }, index) => (
+						? search.productList.map(({ name, id }, index) => (
 								<ProductRow key={id}>
 									{currentFrom + index + 1} {name}
 								</ProductRow>
@@ -31,8 +33,18 @@ const ProductList = ({ query }) => {
 						: null;
 				}}
 			</Query>
-			<button onClick={() => setFrom(currentFrom - 5)}>이전</button>
-			<button onClick={() => setFrom(currentFrom + 5)}>다음</button>
+			<button
+				onClick={() => currentFrom - 5 >= 0 && setFrom(currentFrom - 5)}
+			>
+				이전
+			</button>
+			<button
+				onClick={() =>
+					currentFrom + 5 <= total && setFrom(currentFrom + 5)
+				}
+			>
+				다음
+			</button>
 		</ProductListDiv>
 	);
 };
