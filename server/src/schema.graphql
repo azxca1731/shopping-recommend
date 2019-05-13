@@ -1,6 +1,6 @@
 type Query {
 	connection: Boolean
-	search(data: SearchInput!): [ShoppingItem!]!
+	search(data: SearchInput!): SearchReturnValue!
 	getSearchedArray: [Message!]!
 }
 
@@ -11,6 +11,11 @@ input SearchInput {
 }
 
 scalar Date
+
+type SearchReturnValue {
+	total: Int!
+	productList: [ShoppingItem!]!
+}
 
 type ShoppingItem {
 	id: ID!
