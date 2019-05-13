@@ -1,20 +1,24 @@
-import { GraphQLServer } from "graphql-yoga";
+import { GraphQLServer, PubSub } from "graphql-yoga";
 import session from "express-session";
-import { Query, Mutation } from "./resolvers";
+import { Query, Mutation, Subscription } from "./resolvers";
 import elastic from "./elastic";
 import mongo from "./mongo";
+
+const pubsub = new PubSub();
 
 const server = new GraphQLServer({
 	typeDefs: "./src/schema.graphql",
 	resolvers: {
 		Query,
-		Mutation
+		Mutation,
+		Subscription
 	},
 	context({ request }) {
 		return {
 			request,
 			elastic,
-			mongo
+			mongo,
+			pubsub
 		};
 	}
 });
