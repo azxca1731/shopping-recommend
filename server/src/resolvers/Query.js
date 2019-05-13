@@ -8,13 +8,7 @@ const Query = {
 		{
 			data: { query, from = 0, size = 10 }
 		},
-		{
-			elastic,
-			mongo: { Message },
-			request: {
-				session: { user }
-			}
-		},
+		{ elastic },
 		info
 	) {
 		try {
@@ -48,23 +42,6 @@ const Query = {
 				],
 				[]
 			);
-			if (from !== 0) {
-				const newMessage = new Message({
-					message: query,
-					me: true,
-					query: "",
-					owner: user
-				});
-				newMessage.save();
-				//TODO: 서버측의 응답을 더 좋은 방법으로 가지고 있을 수 있나 확인
-				const serverMessage = new Message({
-					message: "",
-					query,
-					me: false,
-					owner: user
-				});
-				serverMessage.save();
-			}
 			return { total: hits.total, productList: returnDate };
 		} catch (err) {
 			throw new Error(err);

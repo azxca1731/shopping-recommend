@@ -4,6 +4,10 @@ type Query {
 	getSearchedArray: [Message!]!
 }
 
+type Mutation {
+	saveChat(query: String!): Boolean
+}
+
 input SearchInput {
 	query: String!
 	from: Int
