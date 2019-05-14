@@ -8,13 +8,15 @@ type Mutation {
 	saveChat(query: String!): Boolean
 }
 
+type Subscription {
+	Message: Message
+}
+
 input SearchInput {
 	query: String!
 	from: Int
 	size: Int
 }
-
-scalar Date
 
 type SearchReturnValue {
 	total: Int!
@@ -31,5 +33,5 @@ type Message {
 	me: Boolean!
 	query: String
 	message: String
-	created_date: Date!
+	created_date: String
 }

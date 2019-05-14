@@ -1,3 +1,4 @@
 import Query from "./Query";
 import Mutation from "./Mutation";
-export { Query, Mutation };
+import Subscription from "./Subscription";
+export { Query, Mutation, Subscription };

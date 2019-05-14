@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Mutation } from "react-apollo";
 
-import { ADD_SEARCHED_ARRAY, SAVE_CHAT } from "queries";
+import { SAVE_CHAT } from "queries";
 
 const InputBarInput = styled.input`
 	text-align: right;
@@ -19,37 +19,26 @@ const InputBarInput = styled.input`
 
 const InputBar = ({ active }) => {
 	const [input, changeInput] = useState("");
-	const EnterInput = (event, addSearchedArray, saveChat) => {
+	const EnterInput = (event, saveChat) => {
 		if (event.key === "Enter") {
 			saveChat({
 				variables: {
 					query: input
 				}
 			});
-			addSearchedArray({
-				variables: {
-					message: input
-				}
-			});
 			changeInput("");
 		}
 	};
 	return (
-		<Mutation mutation={ADD_SEARCHED_ARRAY}>
-			{(addSearchedArray, _) => (
-				<Mutation mutation={SAVE_CHAT}>
-					{(saveChat, _) => (
-						<InputBarInput
-							active={active}
-							value={input}
-							onChange={e => changeInput(e.target.value)}
-							onKeyPress={e =>
-								EnterInput(e, addSearchedArray, saveChat)
-							}
-							placeholder="여기에 검색을 하세요!"
-						/>
-					)}
-				</Mutation>
+		<Mutation mutation={SAVE_CHAT}>
+			{(saveChat, _) => (
+				<InputBarInput
+					active={active}
+					value={input}
+					onChange={e => changeInput(e.target.value)}
+					onKeyPress={e => EnterInput(e, saveChat)}
+					placeholder="여기에 검색을 하세요!"
+				/>
 			)}
 		</Mutation>
 	);
