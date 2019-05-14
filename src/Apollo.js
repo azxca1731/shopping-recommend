@@ -32,13 +32,6 @@ const typeDefs = gql`
 	extend type Query {
 		getSearchedArray: [Message!]!
 	}
-
-	extend type Message {
-		me: Boolean!
-		message: String
-		query: String
-		id: ID!
-	}
 `;
 
 const Client = new ApolloClient({
@@ -47,13 +40,34 @@ const Client = new ApolloClient({
 	typeDefs,
 	resolvers: {
 		Query: {
-			getSearchedArray: async (_, args, { client, request }) => {
-				const {
-					data: { getSearchedArray }
-				} = await client.query({
-					query: GET_SEARCHED_ARRAY
-				});
-				return getSearchedArray;
+			getSearchedArray: async (_, args, { client }) => {
+				try {
+					const {
+						data: { getSearchedArray }
+					} = await client.query({
+						query: GET_SEARCHED_ARRAY
+					});
+					return getSearchedArray;
+				} catch (err) {
+					return [
+						{
+							message:
+								"현재 접속이 원활하지 않습니다. 다시 시도해주세요",
+							me: false,
+							id: 1004,
+							query: "",
+							__typename: "Message"
+						},
+						{
+							message:
+								"그래도 안될 경우 쿠키를 제거한 하고 시도해주세요.",
+							me: false,
+							id: 1005,
+							query: "",
+							__typename: "Message"
+						}
+					];
+				}
 			}
 		}
 	}
