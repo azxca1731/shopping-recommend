@@ -22,16 +22,6 @@ export const GET_SEARCHED_ARRAY = gql`
 	}
 `;
 
-export const ADD_SEARCHED_ARRAY = gql`
-	mutation addSearchedArray($message: String!) {
-		addSearchedArray(message: $message) @client {
-			message
-			me
-			id
-		}
-	}
-`;
-
 export const SEARCH = gql`
 	query search($query: String!, $from: Int, $size: Int) {
 		search(data: { query: $query, from: $from, size: $size }) {
@@ -47,5 +37,16 @@ export const SEARCH = gql`
 export const SAVE_CHAT = gql`
 	mutation saveChat($query: String!) {
 		saveChat(query: $query)
+	}
+`;
+
+export const MESSAGE_SUBSCRIPTION = gql`
+	subscription {
+		Message {
+			id
+			me
+			message
+			query
+		}
 	}
 `;
