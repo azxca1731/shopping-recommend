@@ -12,7 +12,6 @@ const Mutation = {
 		info
 	) {
 		try {
-			console.log(user);
 			const newMessage = new Message({
 				message: query,
 				me: true,
