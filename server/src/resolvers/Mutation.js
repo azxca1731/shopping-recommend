@@ -20,7 +20,7 @@ const Mutation = {
 				created_date: Date.now() + 9 * 1000 * 60 * 60
 			});
 			newMessage.save();
-			pubsub.publish("MESSAGE", {
+			pubsub.publish(`MESSAGE-${user._id}`, {
 				Message: { ...newMessage._doc, id: newMessage._id }
 			});
 			const serverMessage = new Message({
@@ -31,7 +31,7 @@ const Mutation = {
 				created_date: Date.now() + 9 * 1000 * 60 * 60 + 50
 			});
 			serverMessage.save();
-			pubsub.publish("MESSAGE", {
+			pubsub.publish(`MESSAGE-${user._id}`, {
 				Message: { ...serverMessage._doc, id: serverMessage._id }
 			});
 			return true;

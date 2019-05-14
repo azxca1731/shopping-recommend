@@ -1,7 +1,9 @@
 const Subscription = {
 	Message: {
-		subscribe(parent, args, { pubsub }) {
-			return pubsub.asyncIterator("MESSAGE");
+		subscribe(parent, args, { pubsub, subscriptionContext }) {
+			return pubsub.asyncIterator(
+				`MESSAGE-${subscriptionContext.currentUser._id}`
+			);
 		}
 	}
 };
