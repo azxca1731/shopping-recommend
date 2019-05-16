@@ -2,6 +2,7 @@ type Query {
 	connection: Boolean
 	search(data: SearchInput!): SearchReturnValue!
 	getSearchedArray: [Message!]!
+	searchByCategory(data: RecommendInput!): SearchReturnValue!
 }
 
 type Mutation {
@@ -14,6 +15,12 @@ type Subscription {
 
 input SearchInput {
 	query: String!
+	from: Int
+	size: Int
+}
+
+input RecommendInput {
+	categoryId: Int!
 	from: Int
 	size: Int
 }
@@ -32,6 +39,7 @@ type Message {
 	id: ID!
 	me: Boolean!
 	query: String
+	categoryId: Int
 	message: String
 	created_date: String
 }
