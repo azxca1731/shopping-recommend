@@ -41,6 +41,7 @@ export const SEARCH_BY_CATEGORY = gql`
 		searchByCategory(
 			data: { categoryId: $categoryId, from: $from, size: $size }
 		) {
+			total
 			productList {
 				id
 				name
