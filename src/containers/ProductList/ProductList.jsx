@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Query } from "react-apollo";
+import { ClipLoader } from "react-spinners";
 
 import { SEARCH, SEARCH_BY_CATEGORY } from "queries";
+import Theme from "Theme";
+
+const PRODUCTPAGECOUNT = 3;
 
 const ProductListDiv = styled.div``;
 
-const ProductRow = styled.div`
-	border: 1px solid #000;
-`;
+const ProductRow = styled.div``;
 
 const ProductList = ({ query, categoryId }) => {
 	const [currentFrom, setFrom] = useState(0);
@@ -20,12 +22,26 @@ const ProductList = ({ query, categoryId }) => {
 				query={categoryId ? SEARCH_BY_CATEGORY : SEARCH}
 				variables={
 					categoryId
-						? { categoryId, from: currentFrom, size: 5 }
-						: { query, from: currentFrom, size: 5 }
+						? {
+								categoryId,
+								from: currentFrom,
+								size: PRODUCTPAGECOUNT
+						  }
+						: { query, from: currentFrom, size: PRODUCTPAGECOUNT }
 				}
 			>
 				{({ loading, error, data: { search, searchByCategory } }) => {
-					if (loading) return "loading";
+					if (loading)
+						return (
+							<>
+								<ClipLoader
+									sizeUnit={"px"}
+									size={35}
+									color={Theme.backgroundColor}
+								/>
+								<br />
+							</>
+						);
 					if (error) return `Error! ${error}`;
 					if (categoryId) {
 						total = searchByCategory.total;
@@ -51,13 +67,17 @@ const ProductList = ({ query, categoryId }) => {
 				}}
 			</Query>
 			<button
-				onClick={() => currentFrom - 5 >= 0 && setFrom(currentFrom - 5)}
+				onClick={() =>
+					currentFrom - PRODUCTPAGECOUNT >= 0 &&
+					setFrom(currentFrom - PRODUCTPAGECOUNT)
+				}
 			>
 				이전
 			</button>
 			<button
 				onClick={() =>
-					currentFrom + 5 <= total && setFrom(currentFrom + 5)
+					currentFrom + PRODUCTPAGECOUNT <= total &&
+					setFrom(currentFrom + PRODUCTPAGECOUNT)
 				}
 			>
 				다음
