@@ -17,6 +17,7 @@ const messageSchema = new mongoose.Schema({
 	message: String,
 	query: String,
 	me: Boolean,
+	categoryId: Number,
 	created_date: { type: Date, default: Date.now() + 9 * 3600000 },
 	owner: { type: mongoose.Schema.Types.ObjectId, ref: "user" }
 });
