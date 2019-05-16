@@ -34,11 +34,13 @@ const DownIcon = styled(FontAwesomeIcon)`
 	${props => (props.me === "true" ? "right: 0;" : "left: 0;")}
 `;
 
-const MessageBox = ({ message, me, query }) => {
+const MessageBox = ({ message, me, query, categoryId }) => {
 	return (
 		<MessageBoxDiv me={me}>
 			{message}
-			{query ? <ProductList query={query} /> : null}
+			{query || categoryId ? (
+				<ProductList query={query} categoryId={categoryId} />
+			) : null}
 			<DownIcon
 				icon={faCaretDown}
 				size={"2x"}
@@ -50,14 +52,10 @@ const MessageBox = ({ message, me, query }) => {
 };
 
 MessageBox.propTypes = {
-	message: PropTypes.string.isRequired,
+	message: PropTypes.string,
 	me: PropTypes.bool.isRequired,
-	item: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			name: PropTypes.string
-		})
-	)
+	query: PropTypes.string,
+	categoryId: PropTypes.number
 };
 
 export default MessageBox;
