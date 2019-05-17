@@ -6,15 +6,28 @@ import { ClipLoader } from "react-spinners";
 
 import { SEARCH, SEARCH_BY_CATEGORY } from "queries";
 import Theme from "Theme";
+import alt from "../../altimage.png";
 
 const PRODUCTPAGECOUNT = 3;
 
 const ProductListDiv = styled.div``;
 
-const ProductRow = styled.div``;
+const ProductRow = styled.div`
+	display: flex;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #fff;
+`;
+
+const ProductImage = styled.img`
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+`;
 
 const ProductList = ({ query, categoryId }) => {
 	const [currentFrom, setFrom] = useState(0);
+	console.log(alt);
 	let total;
 	return (
 		<ProductListDiv>
@@ -49,7 +62,10 @@ const ProductList = ({ query, categoryId }) => {
 							? searchByCategory.productList.map(
 									({ name, id }, index) => (
 										<ProductRow key={id}>
-											{currentFrom + index + 1} {name}
+											<ProductImage src={alt} alt="no" />
+											<div>
+												{currentFrom + index + 1} {name}
+											</div>
 										</ProductRow>
 									)
 							  )
@@ -59,7 +75,10 @@ const ProductList = ({ query, categoryId }) => {
 						return search
 							? search.productList.map(({ name, id }, index) => (
 									<ProductRow key={id}>
-										{currentFrom + index + 1} {name}
+										<ProductImage src={alt} alt="no" />
+										<div>
+											{currentFrom + index + 1} {name}
+										</div>
 									</ProductRow>
 							  ))
 							: null;
