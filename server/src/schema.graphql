@@ -1,0 +1,45 @@
+type Query {
+	connection: Boolean
+	search(data: SearchInput!): SearchReturnValue!
+	getSearchedArray: [Message!]!
+	searchByCategory(data: RecommendInput!): SearchReturnValue!
+}
+
+type Mutation {
+	saveChat(query: String!): Boolean
+}
+
+type Subscription {
+	Message: Message
+}
+
+input SearchInput {
+	query: String!
+	from: Int
+	size: Int
+}
+
+input RecommendInput {
+	categoryId: Int!
+	from: Int
+	size: Int
+}
+
+type SearchReturnValue {
+	total: Int!
+	productList: [ShoppingItem!]!
+}
+
+type ShoppingItem {
+	id: ID!
+	name: String!
+}
+
+type Message {
+	id: ID!
+	me: Boolean!
+	query: String
+	categoryId: Int
+	message: String
+	created_date: String
+}
