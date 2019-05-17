@@ -27,7 +27,6 @@ const ProductImage = styled.img`
 
 const ProductList = ({ query, categoryId }) => {
 	const [currentFrom, setFrom] = useState(0);
-	console.log(alt);
 	let total;
 	return (
 		<ProductListDiv>
