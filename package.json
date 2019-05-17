@@ -18,6 +18,7 @@
 		"react-apollo": "^2.5.5",
 		"react-dom": "^16.8.6",
 		"react-scripts": "3.0.0",
+		"react-spinners": "^0.5.4",
 		"styled-components": "^4.2.0",
 		"subscriptions-transport-ws": "^0.9.16",
 		"uuid": "^3.3.2"
