@@ -8,31 +8,64 @@ const Query = {
 		{
 			data: { query, from = 0, size = 10 }
 		},
-		{ elastic },
+		{
+			elastic,
+			request: { session = {} }
+		},
 		info
 	) {
+		let userCategory = [];
+		if (session && session.categoryMost) {
+			const objectArray = Object.entries(session.categoryMost).sort(
+				([_, firstNum], [_1, secondNum]) => secondNum - firstNum
+			);
+			if (objectArray.length === 1) {
+				userCategory = [objectArray[0][0]];
+			} else if (objectArray.length === 2) {
+				userCategory = [objectArray[0][0], objectArray[1][0]];
+			} else {
+				userCategory = [
+					objectArray[0][0],
+					objectArray[1][0],
+					objectArray[2][0]
+				];
+			}
+		}
 		try {
 			const {
 				body: { hits }
 			} = await elastic.search({
 				index: "shopping",
 				body: {
+					query: {
+						bool: {
+							must: [
+								{
+									match: {
+										name: query
+									}
+								}
+							],
+							must_not: [],
+							should: [
+								{
+									terms: {
+										categoryId: userCategory
+									}
+								}
+							]
+						}
+					},
 					from,
 					size,
-					query: {
-						function_score: {
-							query: {
-								match: { name: query }
-							},
-							script_score: {
-								script: {
-									lang: "expression",
-									source: "doc['popularity'].value + _score"
-								}
-							},
-							min_score: 1
+					sort: [
+						{
+							popularity: {
+								order: "desc"
+							}
 						}
-					}
+					],
+					aggs: {}
 				}
 			});
 			const returnDate = hits.hits.reduce(
